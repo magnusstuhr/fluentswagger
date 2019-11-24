@@ -1,38 +1,72 @@
+using System;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using SwaggerAssembly.Config;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SwaggerAssembly
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public readonly SwaggerConfig SwaggerConfig;
+
+        public Startup()
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
+
+            SwaggerConfig = new SwaggerConfig(Configuration, typeof(Startup).Assembly);
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfigurationRoot Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddSwaggerGen(options =>
+            {
+                CreateSwaggerDoc(options, SwaggerConfig.VersionName, SwaggerConfig.Title,
+                    SwaggerConfig.Description, SwaggerConfig.VersionNumber);
+
+                IncludeComments(options, SwaggerConfig.XmlFileName);
+            });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI(options => { options.SwaggerEndpoint(SwaggerConfig.DocUrl, SwaggerConfig.Description); });
 
             app.UseRouting();
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
 
-            app.UseEndpoints(endpoints =>
+        private static void CreateSwaggerDoc(SwaggerGenOptions options, string versionName, string title,
+            string description, string version)
+        {
+            options.SwaggerDoc(versionName, new OpenApiInfo
             {
-                endpoints.MapControllers();
+                Title = title,
+                Description = description,
+                Version = version
             });
+        }
+
+        private static void IncludeComments(SwaggerGenOptions options, string fileName)
+        {
+            options.IncludeXmlComments(GetXmlCommentsPath(fileName));
+        }
+
+        private static string GetXmlCommentsPath(string fileName)
+        {
+            return $"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{fileName}";
         }
     }
 }
