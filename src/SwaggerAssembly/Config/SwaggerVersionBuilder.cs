@@ -5,8 +5,6 @@ namespace SwaggerAssembly.Config
 {
     internal sealed class SwaggerVersionBuilder
     {
-        private const string VersionFragmentSeparator = ".";
-        private const string VersionAnnotation = "v";
         private const string VersionNamePattern = "\\$\\{VersionName\\}";
 
         internal static string EnsureTitleHasCorrectVersion(string title, string versionName)
@@ -18,13 +16,8 @@ namespace SwaggerAssembly.Config
         {
             if (!HasVersionNameAnnotation(docUrl))
             {
-                const string escapeCharacter = "\\\\";
-                var versionNamePatternWithoutEscapedCharacters =
-                    $"{ReplaceRegexPattern(VersionNamePattern, escapeCharacter, string.Empty)} " +
-                    "annotation in the URL, ";
-                throw new ArgumentException("The Swagger doc URL should have a " +
-                                            versionNamePatternWithoutEscapedCharacters +
-                                            $"so that it gets the correct version name from the executing assembly.",
+                throw new ArgumentException("The Swagger doc URL should have a ${VersionName} annotation in the URL, " +
+                                            "so that it gets the correct version name from the executing assembly.",
                     nameof(docUrl));
             }
 
@@ -63,13 +56,14 @@ namespace SwaggerAssembly.Config
 
         private static string[] SplitVersionNumbers(string versionNumber)
         {
-            var versionFragments = versionNumber.Split(VersionFragmentSeparator);
-            return versionFragments;
+            const string versionFragmentSeparator = ".";
+            return versionNumber.Split(versionFragmentSeparator);
         }
 
         private static string CreateVersionName(string versionNumber)
         {
-            return $"{VersionAnnotation}{versionNumber}";
+            const string versionAnnotation = "v";
+            return $"{versionAnnotation}{versionNumber}";
         }
     }
 }
