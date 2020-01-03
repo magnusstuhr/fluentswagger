@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace SwaggerAssembly.Config
+namespace FluentSwagger.Config
 {
     internal sealed class SwaggerVersionBuilder
     {

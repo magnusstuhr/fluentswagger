@@ -1,13 +1,13 @@
 using System;
 using System.IO;
+using FluentSwagger.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using SwaggerAssembly.Config;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace SwaggerAssembly
+namespace FluentSwagger
 {
     public class Startup
     {

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
 
-namespace SwaggerAssembly.Reflection
+namespace FluentSwagger.Reflection
 {
     internal class AssemblyMetaDataExtractor
     {

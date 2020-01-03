@@ -1,4 +1,4 @@
-﻿namespace SwaggerAssembly.Config
+﻿namespace FluentSwagger.Config
 {
     public class SwaggerConfig
     {

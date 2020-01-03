@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using FluentSwagger.Reflection;
 using Microsoft.Extensions.Configuration;
-using SwaggerAssembly.Reflection;
 
-namespace SwaggerAssembly.Config
+namespace FluentSwagger.Config
 {
     public class SwaggerConfigExtractor
     {

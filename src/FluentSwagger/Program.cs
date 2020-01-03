@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace SwaggerAssembly
+namespace FluentSwagger
 {
     public class Program
     {
