@@ -11,6 +11,8 @@ namespace SwaggerAssembly
 {
     public class Startup
     {
+        public IConfigurationRoot Configuration { get; }
+
         public readonly SwaggerConfig SwaggerConfig;
 
         public Startup()
@@ -21,10 +23,9 @@ namespace SwaggerAssembly
 
             Configuration = builder.Build();
 
-            SwaggerConfig = new SwaggerConfig(Configuration, typeof(Startup).Assembly);
+            var swaggerConfigExtractor = new SwaggerConfigExtractor(Configuration, typeof(Startup).Assembly);
+            SwaggerConfig = swaggerConfigExtractor.SwaggerConfig;
         }
-
-        public IConfigurationRoot Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
