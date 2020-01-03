@@ -3,7 +3,7 @@
     <Version>1.0.0</Version>
     <AssemblyName>SwaggerAsembly</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <noWarn>1591</noWarn>
   </PropertyGroup>
   <ItemGroup>
