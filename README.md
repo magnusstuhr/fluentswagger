@@ -1,1 +1,1 @@
-
+FluentSwagger enables seamless and dynamic population of a web APIs general Swagger documentation by extracting and populating all necessary information from the Assembly project file.
