@@ -43,21 +43,22 @@ namespace FluentSwagger
         public void Configure(IApplicationBuilder app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(options => { options.SwaggerEndpoint(SwaggerConfig.DocUrl, SwaggerConfig.Description); });
+            app.UseSwaggerUI(options => options.SwaggerEndpoint(SwaggerConfig.DocUrl, SwaggerConfig.Description));
 
             app.UseRouting();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
 
         private static void CreateSwaggerDoc(SwaggerGenOptions options, string versionName, string title,
             string description, string version)
         {
-            options.SwaggerDoc(versionName, new OpenApiInfo
-            {
-                Title = title,
-                Description = description,
-                Version = version
-            });
+            options.SwaggerDoc(versionName,
+                new OpenApiInfo
+                {
+                    Title = title,
+                    Description = description,
+                    Version = version
+                });
         }
 
         private static void IncludeComments(SwaggerGenOptions options, string fileName)
