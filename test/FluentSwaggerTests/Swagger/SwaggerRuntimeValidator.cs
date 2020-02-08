@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentSwaggerTests.Swagger.Endpoint;
-using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -13,11 +12,6 @@ namespace FluentSwaggerTests.Swagger
     {
         private readonly HttpClient _client;
         private readonly string _swaggerDocPath;
-
-        public SwaggerRuntimeValidator(TestServer testServer, string swaggerDocPath) : this(
-            testServer.CreateClient(), swaggerDocPath)
-        {
-        }
 
         public SwaggerRuntimeValidator(HttpClient client, string swaggerDocPath)
         {
